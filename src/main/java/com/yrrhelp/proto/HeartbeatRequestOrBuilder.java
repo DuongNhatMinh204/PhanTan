@@ -11,11 +11,19 @@ public interface HeartbeatRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
+   * <pre>
+   * xác định trạng thái hoạt động của node
+   * </pre>
+   *
    * <code>string node_id = 1;</code>
    * @return The nodeId.
    */
   java.lang.String getNodeId();
   /**
+   * <pre>
+   * xác định trạng thái hoạt động của node
+   * </pre>
+   *
    * <code>string node_id = 1;</code>
    * @return The bytes for nodeId.
    */

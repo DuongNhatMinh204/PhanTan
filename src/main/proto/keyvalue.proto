@@ -9,8 +9,20 @@ service KvStore {
   rpc Delete (DeleteRequest) returns (Response);
   rpc Heartbeat (HeartbeatRequest) returns (Response);
   rpc Sync (SyncRequest) returns (Response);
+  rpc GetOperationLog(GetOperationLogRequest) returns (GetOperationLogResponse) ;
 }
-
+message Operation{
+  string key = 1 ;
+  string value = 2 ;
+  bool is_delete = 3 ;
+  int64 timestamp = 4 ;
+}
+message GetOperationLogRequest{
+  int64 from_timestamp = 1 ;
+}
+message GetOperationLogResponse{
+  repeated Operation operations = 1 ;
+}
 message PutRequest {
   string key = 1;
   string value = 2;

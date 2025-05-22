@@ -6,13 +6,13 @@
 package com.yrrhelp.proto;
 
 /**
- * Protobuf type {@code HeartbeatRequest}
+ * Protobuf type {@code GetOperationLogRequest}
  */
 @com.google.protobuf.Generated
-public final class HeartbeatRequest extends
+public final class GetOperationLogRequest extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:HeartbeatRequest)
-    HeartbeatRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:GetOperationLogRequest)
+    GetOperationLogRequestOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
     com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
@@ -21,74 +21,37 @@ private static final long serialVersionUID = 0L;
       /* minor= */ 31,
       /* patch= */ 0,
       /* suffix= */ "",
-      HeartbeatRequest.class.getName());
+      GetOperationLogRequest.class.getName());
   }
-  // Use HeartbeatRequest.newBuilder() to construct.
-  private HeartbeatRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  // Use GetOperationLogRequest.newBuilder() to construct.
+  private GetOperationLogRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
     super(builder);
   }
-  private HeartbeatRequest() {
-    nodeId_ = "";
+  private GetOperationLogRequest() {
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.yrrhelp.proto.Keyvalue.internal_static_HeartbeatRequest_descriptor;
+    return com.yrrhelp.proto.Keyvalue.internal_static_GetOperationLogRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.yrrhelp.proto.Keyvalue.internal_static_HeartbeatRequest_fieldAccessorTable
+    return com.yrrhelp.proto.Keyvalue.internal_static_GetOperationLogRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.yrrhelp.proto.HeartbeatRequest.class, com.yrrhelp.proto.HeartbeatRequest.Builder.class);
+            com.yrrhelp.proto.GetOperationLogRequest.class, com.yrrhelp.proto.GetOperationLogRequest.Builder.class);
   }
 
-  public static final int NODE_ID_FIELD_NUMBER = 1;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object nodeId_ = "";
+  public static final int FROM_TIMESTAMP_FIELD_NUMBER = 1;
+  private long fromTimestamp_ = 0L;
   /**
-   * <pre>
-   * xác định trạng thái hoạt động của node
-   * </pre>
-   *
-   * <code>string node_id = 1;</code>
-   * @return The nodeId.
+   * <code>int64 from_timestamp = 1;</code>
+   * @return The fromTimestamp.
    */
   @java.lang.Override
-  public java.lang.String getNodeId() {
-    java.lang.Object ref = nodeId_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      nodeId_ = s;
-      return s;
-    }
-  }
-  /**
-   * <pre>
-   * xác định trạng thái hoạt động của node
-   * </pre>
-   *
-   * <code>string node_id = 1;</code>
-   * @return The bytes for nodeId.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getNodeIdBytes() {
-    java.lang.Object ref = nodeId_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      nodeId_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public long getFromTimestamp() {
+    return fromTimestamp_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -105,8 +68,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(nodeId_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 1, nodeId_);
+    if (fromTimestamp_ != 0L) {
+      output.writeInt64(1, fromTimestamp_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -117,8 +80,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(nodeId_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(1, nodeId_);
+    if (fromTimestamp_ != 0L) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt64Size(1, fromTimestamp_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -130,13 +94,13 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.yrrhelp.proto.HeartbeatRequest)) {
+    if (!(obj instanceof com.yrrhelp.proto.GetOperationLogRequest)) {
       return super.equals(obj);
     }
-    com.yrrhelp.proto.HeartbeatRequest other = (com.yrrhelp.proto.HeartbeatRequest) obj;
+    com.yrrhelp.proto.GetOperationLogRequest other = (com.yrrhelp.proto.GetOperationLogRequest) obj;
 
-    if (!getNodeId()
-        .equals(other.getNodeId())) return false;
+    if (getFromTimestamp()
+        != other.getFromTimestamp()) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -148,51 +112,52 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + NODE_ID_FIELD_NUMBER;
-    hash = (53 * hash) + getNodeId().hashCode();
+    hash = (37 * hash) + FROM_TIMESTAMP_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getFromTimestamp());
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(byte[] data)
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(java.io.InputStream input)
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -200,26 +165,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static com.yrrhelp.proto.HeartbeatRequest parseDelimitedFrom(java.io.InputStream input)
+  public static com.yrrhelp.proto.GetOperationLogRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static com.yrrhelp.proto.HeartbeatRequest parseDelimitedFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static com.yrrhelp.proto.HeartbeatRequest parseFrom(
+  public static com.yrrhelp.proto.GetOperationLogRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -232,7 +197,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.yrrhelp.proto.HeartbeatRequest prototype) {
+  public static Builder newBuilder(com.yrrhelp.proto.GetOperationLogRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -248,26 +213,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code HeartbeatRequest}
+   * Protobuf type {@code GetOperationLogRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:HeartbeatRequest)
-      com.yrrhelp.proto.HeartbeatRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:GetOperationLogRequest)
+      com.yrrhelp.proto.GetOperationLogRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.yrrhelp.proto.Keyvalue.internal_static_HeartbeatRequest_descriptor;
+      return com.yrrhelp.proto.Keyvalue.internal_static_GetOperationLogRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.yrrhelp.proto.Keyvalue.internal_static_HeartbeatRequest_fieldAccessorTable
+      return com.yrrhelp.proto.Keyvalue.internal_static_GetOperationLogRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.yrrhelp.proto.HeartbeatRequest.class, com.yrrhelp.proto.HeartbeatRequest.Builder.class);
+              com.yrrhelp.proto.GetOperationLogRequest.class, com.yrrhelp.proto.GetOperationLogRequest.Builder.class);
     }
 
-    // Construct using com.yrrhelp.proto.HeartbeatRequest.newBuilder()
+    // Construct using com.yrrhelp.proto.GetOperationLogRequest.newBuilder()
     private Builder() {
 
     }
@@ -281,24 +246,24 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      nodeId_ = "";
+      fromTimestamp_ = 0L;
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.yrrhelp.proto.Keyvalue.internal_static_HeartbeatRequest_descriptor;
+      return com.yrrhelp.proto.Keyvalue.internal_static_GetOperationLogRequest_descriptor;
     }
 
     @java.lang.Override
-    public com.yrrhelp.proto.HeartbeatRequest getDefaultInstanceForType() {
-      return com.yrrhelp.proto.HeartbeatRequest.getDefaultInstance();
+    public com.yrrhelp.proto.GetOperationLogRequest getDefaultInstanceForType() {
+      return com.yrrhelp.proto.GetOperationLogRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.yrrhelp.proto.HeartbeatRequest build() {
-      com.yrrhelp.proto.HeartbeatRequest result = buildPartial();
+    public com.yrrhelp.proto.GetOperationLogRequest build() {
+      com.yrrhelp.proto.GetOperationLogRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -306,36 +271,34 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.yrrhelp.proto.HeartbeatRequest buildPartial() {
-      com.yrrhelp.proto.HeartbeatRequest result = new com.yrrhelp.proto.HeartbeatRequest(this);
+    public com.yrrhelp.proto.GetOperationLogRequest buildPartial() {
+      com.yrrhelp.proto.GetOperationLogRequest result = new com.yrrhelp.proto.GetOperationLogRequest(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(com.yrrhelp.proto.HeartbeatRequest result) {
+    private void buildPartial0(com.yrrhelp.proto.GetOperationLogRequest result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.nodeId_ = nodeId_;
+        result.fromTimestamp_ = fromTimestamp_;
       }
     }
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.yrrhelp.proto.HeartbeatRequest) {
-        return mergeFrom((com.yrrhelp.proto.HeartbeatRequest)other);
+      if (other instanceof com.yrrhelp.proto.GetOperationLogRequest) {
+        return mergeFrom((com.yrrhelp.proto.GetOperationLogRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.yrrhelp.proto.HeartbeatRequest other) {
-      if (other == com.yrrhelp.proto.HeartbeatRequest.getDefaultInstance()) return this;
-      if (!other.getNodeId().isEmpty()) {
-        nodeId_ = other.nodeId_;
-        bitField0_ |= 0x00000001;
-        onChanged();
+    public Builder mergeFrom(com.yrrhelp.proto.GetOperationLogRequest other) {
+      if (other == com.yrrhelp.proto.GetOperationLogRequest.getDefaultInstance()) return this;
+      if (other.getFromTimestamp() != 0L) {
+        setFromTimestamp(other.getFromTimestamp());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -363,11 +326,11 @@ private static final long serialVersionUID = 0L;
             case 0:
               done = true;
               break;
-            case 10: {
-              nodeId_ = input.readStringRequireUtf8();
+            case 8: {
+              fromTimestamp_ = input.readInt64();
               bitField0_ |= 0x00000001;
               break;
-            } // case 10
+            } // case 8
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -385,115 +348,55 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object nodeId_ = "";
+    private long fromTimestamp_ ;
     /**
-     * <pre>
-     * xác định trạng thái hoạt động của node
-     * </pre>
-     *
-     * <code>string node_id = 1;</code>
-     * @return The nodeId.
+     * <code>int64 from_timestamp = 1;</code>
+     * @return The fromTimestamp.
      */
-    public java.lang.String getNodeId() {
-      java.lang.Object ref = nodeId_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        nodeId_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    @java.lang.Override
+    public long getFromTimestamp() {
+      return fromTimestamp_;
     }
     /**
-     * <pre>
-     * xác định trạng thái hoạt động của node
-     * </pre>
-     *
-     * <code>string node_id = 1;</code>
-     * @return The bytes for nodeId.
-     */
-    public com.google.protobuf.ByteString
-        getNodeIdBytes() {
-      java.lang.Object ref = nodeId_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        nodeId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <pre>
-     * xác định trạng thái hoạt động của node
-     * </pre>
-     *
-     * <code>string node_id = 1;</code>
-     * @param value The nodeId to set.
+     * <code>int64 from_timestamp = 1;</code>
+     * @param value The fromTimestamp to set.
      * @return This builder for chaining.
      */
-    public Builder setNodeId(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      nodeId_ = value;
+    public Builder setFromTimestamp(long value) {
+
+      fromTimestamp_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * xác định trạng thái hoạt động của node
-     * </pre>
-     *
-     * <code>string node_id = 1;</code>
+     * <code>int64 from_timestamp = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearNodeId() {
-      nodeId_ = getDefaultInstance().getNodeId();
+    public Builder clearFromTimestamp() {
       bitField0_ = (bitField0_ & ~0x00000001);
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * xác định trạng thái hoạt động của node
-     * </pre>
-     *
-     * <code>string node_id = 1;</code>
-     * @param value The bytes for nodeId to set.
-     * @return This builder for chaining.
-     */
-    public Builder setNodeIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      nodeId_ = value;
-      bitField0_ |= 0x00000001;
+      fromTimestamp_ = 0L;
       onChanged();
       return this;
     }
 
-    // @@protoc_insertion_point(builder_scope:HeartbeatRequest)
+    // @@protoc_insertion_point(builder_scope:GetOperationLogRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:HeartbeatRequest)
-  private static final com.yrrhelp.proto.HeartbeatRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:GetOperationLogRequest)
+  private static final com.yrrhelp.proto.GetOperationLogRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.yrrhelp.proto.HeartbeatRequest();
+    DEFAULT_INSTANCE = new com.yrrhelp.proto.GetOperationLogRequest();
   }
 
-  public static com.yrrhelp.proto.HeartbeatRequest getDefaultInstance() {
+  public static com.yrrhelp.proto.GetOperationLogRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<HeartbeatRequest>
-      PARSER = new com.google.protobuf.AbstractParser<HeartbeatRequest>() {
+  private static final com.google.protobuf.Parser<GetOperationLogRequest>
+      PARSER = new com.google.protobuf.AbstractParser<GetOperationLogRequest>() {
     @java.lang.Override
-    public HeartbeatRequest parsePartialFrom(
+    public GetOperationLogRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -512,17 +415,17 @@ private static final long serialVersionUID = 0L;
     }
   };
 
-  public static com.google.protobuf.Parser<HeartbeatRequest> parser() {
+  public static com.google.protobuf.Parser<GetOperationLogRequest> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<HeartbeatRequest> getParserForType() {
+  public com.google.protobuf.Parser<GetOperationLogRequest> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.yrrhelp.proto.HeartbeatRequest getDefaultInstanceForType() {
+  public com.yrrhelp.proto.GetOperationLogRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

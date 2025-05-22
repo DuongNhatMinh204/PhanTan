@@ -27,6 +27,21 @@ public final class Keyvalue {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Operation_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Operation_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_GetOperationLogRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_GetOperationLogRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_GetOperationLogResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_GetOperationLogResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_PutRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -65,55 +80,80 @@ public final class Keyvalue {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016keyvalue.proto\"(\n\nPutRequest\022\013\n\003key\030\001 " +
-      "\001(\t\022\r\n\005value\030\002 \001(\t\"\031\n\nGetRequest\022\013\n\003key\030" +
-      "\001 \001(\t\"\034\n\rDeleteRequest\022\013\n\003key\030\001 \001(\t\"#\n\020H" +
-      "eartbeatRequest\022\017\n\007node_id\030\001 \001(\t\"<\n\013Sync" +
-      "Request\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\021\n\ti" +
-      "s_delete\030\003 \001(\010\")\n\010Response\022\016\n\006status\030\001 \001" +
-      "(\t\022\r\n\005value\030\002 \001(\t2\270\001\n\007KvStore\022\035\n\003Put\022\013.P" +
-      "utRequest\032\t.Response\022\035\n\003Get\022\013.GetRequest" +
-      "\032\t.Response\022#\n\006Delete\022\016.DeleteRequest\032\t." +
-      "Response\022)\n\tHeartbeat\022\021.HeartbeatRequest" +
-      "\032\t.Response\022\037\n\004Sync\022\014.SyncRequest\032\t.Resp" +
-      "onseB\025\n\021com.yrrhelp.protoP\001b\006proto3"
+      "\n\016keyvalue.proto\"M\n\tOperation\022\013\n\003key\030\001 \001" +
+      "(\t\022\r\n\005value\030\002 \001(\t\022\021\n\tis_delete\030\003 \001(\010\022\021\n\t" +
+      "timestamp\030\004 \001(\003\"0\n\026GetOperationLogReques" +
+      "t\022\026\n\016from_timestamp\030\001 \001(\003\"9\n\027GetOperatio" +
+      "nLogResponse\022\036\n\noperations\030\001 \003(\0132\n.Opera" +
+      "tion\"(\n\nPutRequest\022\013\n\003key\030\001 \001(\t\022\r\n\005value" +
+      "\030\002 \001(\t\"\031\n\nGetRequest\022\013\n\003key\030\001 \001(\t\"\034\n\rDel" +
+      "eteRequest\022\013\n\003key\030\001 \001(\t\"#\n\020HeartbeatRequ" +
+      "est\022\017\n\007node_id\030\001 \001(\t\"<\n\013SyncRequest\022\013\n\003k" +
+      "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\021\n\tis_delete\030\003 \001" +
+      "(\010\")\n\010Response\022\016\n\006status\030\001 \001(\t\022\r\n\005value\030" +
+      "\002 \001(\t2\376\001\n\007KvStore\022\035\n\003Put\022\013.PutRequest\032\t." +
+      "Response\022\035\n\003Get\022\013.GetRequest\032\t.Response\022" +
+      "#\n\006Delete\022\016.DeleteRequest\032\t.Response\022)\n\t" +
+      "Heartbeat\022\021.HeartbeatRequest\032\t.Response\022" +
+      "\037\n\004Sync\022\014.SyncRequest\032\t.Response\022D\n\017GetO" +
+      "perationLog\022\027.GetOperationLogRequest\032\030.G" +
+      "etOperationLogResponseB\025\n\021com.yrrhelp.pr" +
+      "otoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_PutRequest_descriptor =
+    internal_static_Operation_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_Operation_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Operation_descriptor,
+        new java.lang.String[] { "Key", "Value", "IsDelete", "Timestamp", });
+    internal_static_GetOperationLogRequest_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_GetOperationLogRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_GetOperationLogRequest_descriptor,
+        new java.lang.String[] { "FromTimestamp", });
+    internal_static_GetOperationLogResponse_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_GetOperationLogResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_GetOperationLogResponse_descriptor,
+        new java.lang.String[] { "Operations", });
+    internal_static_PutRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
     internal_static_PutRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_PutRequest_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_GetRequest_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_GetRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_GetRequest_descriptor,
         new java.lang.String[] { "Key", });
     internal_static_DeleteRequest_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_DeleteRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_DeleteRequest_descriptor,
         new java.lang.String[] { "Key", });
     internal_static_HeartbeatRequest_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_HeartbeatRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_HeartbeatRequest_descriptor,
         new java.lang.String[] { "NodeId", });
     internal_static_SyncRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_SyncRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SyncRequest_descriptor,
         new java.lang.String[] { "Key", "Value", "IsDelete", });
     internal_static_Response_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_Response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Response_descriptor,

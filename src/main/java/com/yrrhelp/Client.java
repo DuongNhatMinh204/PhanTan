@@ -36,8 +36,8 @@ public class Client {
 
     public static void main(String[] args) {
         Client client = new Client("localhost", 50051);
-        Client client2 = new Client("localhost", 50052);
-        Client client3 = new Client("localhost", 50053);
+//        Client client2 = new Client("localhost", 50052);
+//        Client client3 = new Client("localhost", 50053);
         Scanner scanner = new Scanner(System.in);
 
         while (true) {

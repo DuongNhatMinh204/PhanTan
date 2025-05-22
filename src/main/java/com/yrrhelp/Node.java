@@ -1,12 +1,6 @@
 package com.yrrhelp;
 
-import com.yrrhelp.proto.KvStoreGrpc;
-import com.yrrhelp.proto.PutRequest;
-import com.yrrhelp.proto.GetRequest;
-import com.yrrhelp.proto.DeleteRequest;
-import com.yrrhelp.proto.HeartbeatRequest;
-import com.yrrhelp.proto.SyncRequest;
-import com.yrrhelp.proto.Response;
+import com.yrrhelp.proto.*;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -113,38 +107,64 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
     }
 
     private void recoverData() {
+        int maxRetries = 5;
+        int retryDelayMs = 2000; // 2 giây thử lại 1 lần
         for (NodeInfo node : otherNodes) {
-            ManagedChannel channel = null;
-            try {
-                channel = ManagedChannelBuilder.forAddress(node.getHost(), node.getPort())
-                        .usePlaintext()
-                        .build();
-                KvStoreGrpc.KvStoreBlockingStub stub = KvStoreGrpc.newBlockingStub(channel);
-
-                Response resp = stub.get(GetRequest.newBuilder().setKey("snapshot").build());
-                if (resp.getStatus().equals("OK")) {
-                    dataStore.put("snapshot", resp.getValue());
-                    System.out.println("Recovered snapshot from " + node.getId());
-                    break; // Đã recover thành công thì dừng lại
-                }
-            } catch (Exception e) {
-                System.out.println("Failed to recover from " + node.getId() + ": " + e.getMessage());
-            } finally {
-                if (channel != null) {
-                    channel.shutdown();
-                    try {
-                        if (!channel.awaitTermination(1, TimeUnit.SECONDS)) {
-                            channel.shutdownNow();
+            for (int attempt = 1; attempt <= maxRetries; attempt++) {
+                ManagedChannel channel = null;
+                try {
+                    channel = ManagedChannelBuilder.forAddress(node.getHost(), node.getPort())
+                            .usePlaintext()
+                            .build();
+                    KvStoreGrpc.KvStoreBlockingStub stub = KvStoreGrpc.newBlockingStub(channel);
+                    GetOperationLogResponse resp = stub.getOperationLog(GetOperationLogRequest.newBuilder()
+                            .setFromTimestamp(0) // Lấy tất cả log từ đầu
+                            .build());
+                    for (Operation op : resp.getOperationsList()) {
+                        if (op.getIsDelete()) {
+                            dataStore.delete(op.getKey());
+                        } else {
+                            dataStore.put(op.getKey(), op.getValue());
                         }
-                    } catch (InterruptedException ex) {
-                        channel.shutdownNow();
+                    }
+                    System.out.println("Has restored the status of the log of  " + node.getId());
+                    return;
+                } catch (Exception e) {
+                    System.out.println("Error  " + attempt + " unsuccessfully " + node.getId() + ": " + e.getMessage());
+                    if (attempt < maxRetries) {
+                        try {
+                            Thread.sleep(retryDelayMs);
+                        } catch (InterruptedException ie) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                } finally {
+                    if (channel != null) {
+                        channel.shutdown();
+                        try {
+                            if (!channel.awaitTermination(1, TimeUnit.SECONDS)) {
+                                channel.shutdownNow();
+                            }
+                        } catch (InterruptedException ex) {
+                            channel.shutdownNow();
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 }
             }
         }
+        System.out.println("Cannot restore the status from any nodes .");
     }
 
-
+    @Override
+    public void getOperationLog(GetOperationLogRequest req,StreamObserver<GetOperationLogResponse> responseObserver){
+        List<Operation> ops = dataStore.getOperationLog(req.getFromTimestamp()) ;
+        GetOperationLogResponse response = GetOperationLogResponse.newBuilder()
+                .addAllOperations(ops)
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
     public static void main(String[] args) throws IOException, InterruptedException {
         List<NodeInfo> nodes = Arrays.asList(
                 new NodeInfo("node1", "localhost", 50051),
