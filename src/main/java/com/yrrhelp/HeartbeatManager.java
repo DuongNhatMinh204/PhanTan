@@ -20,8 +20,12 @@ public class HeartbeatManager {
     public HeartbeatManager(NodeInfo currentNode, List<NodeInfo> otherNodes) {
         this.currentNode = currentNode;
         this.otherNodes = otherNodes;
-        startHeartbeat(); // gửi heart beat đến các node khác
-        startMonitoring(); // theo dõi
+//        startHeartbeat(); // gửi heart beat đến các node khác
+//        startMonitoring(); // theo dõi
+        scheduler.schedule(() -> {
+            startHeartbeat();
+            startMonitoring();
+        }, 5, TimeUnit.SECONDS);
     }
 
     // 5 giây gửi heart beat 1 lần
@@ -31,14 +35,16 @@ public class HeartbeatManager {
                 ManagedChannel channel = null;
                 try {
                     // tạo 1 kết nối grpc tới node đích
+                    System.out.println("Try connect to " + node.getHost() + ":" + node.getPort());
                     channel = ManagedChannelBuilder.forAddress(node.getHost(), node.getPort())
                             .usePlaintext()
                             .build();
                     KvStoreGrpc.KvStoreBlockingStub stub = KvStoreGrpc.newBlockingStub(channel);
 
                     stub.heartbeat(HeartbeatRequest.newBuilder().setNodeId(currentNode.getId()).build());
+                    System.out.println("Send signals successful to   " + node.getHost() + ":" + node.getPort());
                 } catch (Exception e) {
-                    System.out.println("Failed to send heartbeat to " + node.getId() + ": " + e.getMessage());
+                    System.out.println("Cannot send signals to " + node.getId() + ": " + e.getMessage());
                 } finally {
                     if (channel != null){
                         channel.shutdown();
@@ -63,6 +69,8 @@ public class HeartbeatManager {
                 lastHeartbeat.computeIfAbsent(node.getId(), k -> currentTime);
                 if (currentTime - lastHeartbeat.get(node.getId()) > 10000) {
                     System.out.println("Node " + node.getId() + " is down!");
+                }else{
+                    System.out.println("Node " + node.getId() + " is up!");
                 }
             }
         }, 0, 10, TimeUnit.SECONDS);

@@ -30,10 +30,10 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
                 .addService(this)
                 .build();
         server.start();
-        System.out.println("Node " + nodeInfo.getId() + " started on port " + nodeInfo.getPort());
+        System.out.println("Node " + nodeInfo.getId() + " starting in port :  " + nodeInfo.getPort());
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             server.shutdown();
-            System.out.println("Node " + nodeInfo.getId() + " stopped");
+            System.out.println("Node " + nodeInfo.getId() + " has stopped");
         }));
         server.awaitTermination();
     }
@@ -99,9 +99,10 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
                         .setValue(value)
                         .setIsDelete(isDelete)
                         .build());
+                System.out.println("Node " + node.getId() + " sync to other node");
                 channel.shutdown();
             } catch (Exception e) {
-                System.out.println("Failed to sync to " + node.getId());
+                System.out.println("Cannot sync to other node" + node.getId());
             }
         }
     }
@@ -127,10 +128,10 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
                             dataStore.put(op.getKey(), op.getValue());
                         }
                     }
-                    System.out.println("Has restored the status of the log of  " + node.getId());
+                    System.out.println("Has restored data from log of node :  " + node.getId());
                     return;
                 } catch (Exception e) {
-                    System.out.println("Error  " + attempt + " unsuccessfully " + node.getId() + ": " + e.getMessage());
+                    System.out.println("  " + attempt + " Get data failed " + node.getId() + ": " + e.getMessage());
                     if (attempt < maxRetries) {
                         try {
                             Thread.sleep(retryDelayMs);
@@ -153,7 +154,7 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
                 }
             }
         }
-        System.out.println("Cannot restore the status from any nodes .");
+        System.out.println("Cannot restore data from log of any node : .");
     }
 
     @Override
