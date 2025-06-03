@@ -71,6 +71,21 @@ public final class Keyvalue {
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Response_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_HeartbeatInfoRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_HeartbeatInfoRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_HeartbeatInfoResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_HeartbeatInfoResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_HeartbeatInfoResponse_LastHeartbeatEntry_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_HeartbeatInfoResponse_LastHeartbeatEntry_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -91,14 +106,20 @@ public final class Keyvalue {
       "est\022\017\n\007node_id\030\001 \001(\t\"<\n\013SyncRequest\022\013\n\003k" +
       "ey\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\021\n\tis_delete\030\003 \001" +
       "(\010\")\n\010Response\022\016\n\006status\030\001 \001(\t\022\r\n\005value\030" +
-      "\002 \001(\t2\376\001\n\007KvStore\022\035\n\003Put\022\013.PutRequest\032\t." +
-      "Response\022\035\n\003Get\022\013.GetRequest\032\t.Response\022" +
-      "#\n\006Delete\022\016.DeleteRequest\032\t.Response\022)\n\t" +
-      "Heartbeat\022\021.HeartbeatRequest\032\t.Response\022" +
-      "\037\n\004Sync\022\014.SyncRequest\032\t.Response\022D\n\017GetO" +
-      "perationLog\022\027.GetOperationLogRequest\032\030.G" +
-      "etOperationLogResponseB\025\n\021com.yrrhelp.pr" +
-      "otoP\001b\006proto3"
+      "\002 \001(\t\"\026\n\024HeartbeatInfoRequest\"\220\001\n\025Heartb" +
+      "eatInfoResponse\022A\n\016last_heartbeat\030\001 \003(\0132" +
+      ").HeartbeatInfoResponse.LastHeartbeatEnt" +
+      "ry\0324\n\022LastHeartbeatEntry\022\013\n\003key\030\001 \001(\t\022\r\n" +
+      "\005value\030\002 \001(\003:\0028\0012\301\002\n\007KvStore\022\035\n\003Put\022\013.Pu" +
+      "tRequest\032\t.Response\022\035\n\003Get\022\013.GetRequest\032" +
+      "\t.Response\022#\n\006Delete\022\016.DeleteRequest\032\t.R" +
+      "esponse\022)\n\tHeartbeat\022\021.HeartbeatRequest\032" +
+      "\t.Response\022\037\n\004Sync\022\014.SyncRequest\032\t.Respo" +
+      "nse\022D\n\017GetOperationLog\022\027.GetOperationLog" +
+      "Request\032\030.GetOperationLogResponse\022A\n\020Get" +
+      "HeartbeatInfo\022\025.HeartbeatInfoRequest\032\026.H" +
+      "eartbeatInfoResponseB\025\n\021com.yrrhelp.prot" +
+      "oP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -158,6 +179,24 @@ public final class Keyvalue {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Response_descriptor,
         new java.lang.String[] { "Status", "Value", });
+    internal_static_HeartbeatInfoRequest_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_HeartbeatInfoRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_HeartbeatInfoRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_HeartbeatInfoResponse_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_HeartbeatInfoResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_HeartbeatInfoResponse_descriptor,
+        new java.lang.String[] { "LastHeartbeat", });
+    internal_static_HeartbeatInfoResponse_LastHeartbeatEntry_descriptor =
+      internal_static_HeartbeatInfoResponse_descriptor.getNestedTypes().get(0);
+    internal_static_HeartbeatInfoResponse_LastHeartbeatEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_HeartbeatInfoResponse_LastHeartbeatEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
     descriptor.resolveAllFeaturesImmutable();
   }
 

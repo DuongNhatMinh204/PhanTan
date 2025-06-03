@@ -8,7 +8,9 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Node extends KvStoreGrpc.KvStoreImplBase {
@@ -87,6 +89,14 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void getHeartbeatInfo(HeartbeatInfoRequest req, StreamObserver<HeartbeatInfoResponse> responseObserver) {
+        HeartbeatInfoResponse.Builder responseBuilder = HeartbeatInfoResponse.newBuilder();
+        heartbeatManager.getLastHeartbeat().forEach(responseBuilder::putLastHeartbeat);
+        responseObserver.onNext(responseBuilder.build());
+        responseObserver.onCompleted();
+    }
+
     private void syncToOtherNodes(String key, String value, boolean isDelete) {
         for (NodeInfo node : otherNodes) {
             try {
@@ -110,6 +120,9 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
     private void recoverData() {
         int maxRetries = 5;
         int retryDelayMs = 2000; // 2 giây thử lại 1 lần
+        Map<String, Long> heartbeatInfo = getOtherNodesHeartbeat();
+        Long lastActiveTime = heartbeatInfo.getOrDefault(nodeInfo.getId(), 0L);
+
         for (NodeInfo node : otherNodes) {
             for (int attempt = 1; attempt <= maxRetries; attempt++) {
                 ManagedChannel channel = null;
@@ -119,7 +132,8 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
                             .build();
                     KvStoreGrpc.KvStoreBlockingStub stub = KvStoreGrpc.newBlockingStub(channel);
                     GetOperationLogResponse resp = stub.getOperationLog(GetOperationLogRequest.newBuilder()
-                            .setFromTimestamp(0) // Lấy tất cả log từ đầu
+//                            .setFromTimestamp(0) // Lấy tất cả log từ đầu
+                                    .setFromTimestamp(lastActiveTime)
                             .build());
                     for (Operation op : resp.getOperationsList()) {
                         if (op.getIsDelete()) {
@@ -166,6 +180,36 @@ public class Node extends KvStoreGrpc.KvStoreImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+    private Map<String, Long> getOtherNodesHeartbeat() {
+        Map<String, Long> heartbeatInfo = new HashMap<>();
+        for (NodeInfo node : otherNodes) {
+            ManagedChannel channel = null;
+            try {
+                channel = ManagedChannelBuilder.forAddress(node.getHost(), node.getPort())
+                        .usePlaintext()
+                        .build();
+                KvStoreGrpc.KvStoreBlockingStub stub = KvStoreGrpc.newBlockingStub(channel);
+                HeartbeatInfoResponse resp = stub.getHeartbeatInfo(HeartbeatInfoRequest.newBuilder().build());
+                heartbeatInfo.putAll(resp.getLastHeartbeatMap());
+                System.out.println("Retrieved heartbeat info from " + node.getId());
+            } catch (Exception e) {
+                System.out.println("Failed to get heartbeat info from " + node.getId() + ": " + e.getMessage());
+            } finally {
+                if (channel != null) {
+                    channel.shutdown();
+                    try {
+                        if (!channel.awaitTermination(1, TimeUnit.SECONDS)) {
+                            channel.shutdownNow();
+                        }
+                    } catch (InterruptedException ex) {
+                        channel.shutdownNow();
+                    }
+                }
+            }
+        }
+        return heartbeatInfo;
+    }
+
     public static void main(String[] args) throws IOException, InterruptedException {
         List<NodeInfo> nodes = Arrays.asList(
                 new NodeInfo("node1", "localhost", 50051),

@@ -10,6 +10,7 @@ service KvStore {
   rpc Heartbeat (HeartbeatRequest) returns (Response);
   rpc Sync (SyncRequest) returns (Response);
   rpc GetOperationLog(GetOperationLogRequest) returns (GetOperationLogResponse) ;
+  rpc GetHeartbeatInfo (HeartbeatInfoRequest) returns (HeartbeatInfoResponse);
 }
 message Operation{
   string key = 1 ;
@@ -49,4 +50,10 @@ message SyncRequest {
 message Response {
   string status = 1;
   string value = 2;
+}
+message HeartbeatInfoRequest {
+}
+
+message HeartbeatInfoResponse {
+  map<string, int64> last_heartbeat = 1; // node_id -> timestamp
 }

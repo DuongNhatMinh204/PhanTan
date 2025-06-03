@@ -70,7 +70,7 @@ public class HeartbeatManager {
                 if (currentTime - lastHeartbeat.get(node.getId()) > 10000) {
                     System.out.println("Node " + node.getId() + " is down!");
                 }else{
-                    System.out.println("Node " + node.getId() + " is up!");
+                    System.out.println("Node " + node.getId() + "   is up!");
                 }
             }
         }, 0, 10, TimeUnit.SECONDS);
@@ -78,5 +78,8 @@ public class HeartbeatManager {
 
     public void updateHeartbeat(String nodeId) {
         lastHeartbeat.put(nodeId, System.currentTimeMillis());
+    }
+    public Map<String, Long> getLastHeartbeat() {
+        return new HashMap<>(lastHeartbeat);
     }
 }
